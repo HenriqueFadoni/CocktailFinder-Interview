@@ -2,15 +2,19 @@ import React from 'react';
 import {
     StyleSheet,
     Text,
+    Image,
     TouchableOpacity
 } from 'react-native';
 import PropTypes from 'prop-types';
+
+import searchIcon from './search_icon.png';
 
 const SearchBtn = props => (
     <TouchableOpacity
         style={styles.container}
         onPress={props.clickHandler}
     >
+        <Image source={searchIcon} style={styles.icon} />
         <Text style={styles.textStyle}>
             Search Your Favorite Cocktail
         </Text>

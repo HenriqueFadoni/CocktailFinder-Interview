@@ -23,7 +23,7 @@ class WelcomeScreen extends Component {
     return (
       <View style={styles.container}>
         <StatusBar 
-          backgroundColor='red'
+          backgroundColor='#6DA7D3'
           barStyle='light-content'
         />
         <IntroIcon />
