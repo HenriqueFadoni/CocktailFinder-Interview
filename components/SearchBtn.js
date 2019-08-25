@@ -17,7 +17,7 @@ const SearchBtn = props => (
         <SearchIcon style={styles.icon} />
         <Text style={styles.textStyle}>
             Search Your Favorite Cocktail
-            </Text>
+        </Text>
     </TouchableOpacity>
 );
 

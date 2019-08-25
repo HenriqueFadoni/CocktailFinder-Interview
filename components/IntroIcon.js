@@ -8,14 +8,13 @@ import CocktailIcon from '../assets/icons/CocktailIcon';
 
 const IntroIcon = () => (
     <View>
-        <CocktailIcon />
+        <CocktailIcon style={styles.icon} />
     </View>
 );
 
 const styles = StyleSheet.create({
     icon: {
         marginLeft: 35,
-        color: 'white'
     }
 });
 
