@@ -1,47 +1,52 @@
 import React, { Component } from 'react';
 import {
     View,
-    TextInput,
     StyleSheet,
     StatusBar
 } from 'react-native';
 
+import SearchInput from '../components/SearchInput';
+
 class SearchScreen extends Component {
     static navigationOptions = {
-      headerStyle: {
-        backgroundColor: '#6DA7D3'
-      },
-      headerTintColor: 'white',
-      headerTitleStyle: {
-        color: 'white',
-      },
+        headerStyle: {
+            backgroundColor: '#6DA7D3',
+            borderBottomWidth: 0,
+            elevation: 0
+        },
+        headerTintColor: 'white',
+        headerTitleStyle: {
+            color: 'white',
+        },
     };
 
-
     state = {
-        isSearching: false
+        isSearching: false,
+        drinkName: '',
     }
 
-    searchHandler = () => {
+    searchHandler = event => {
         const { isSearching } = this.state;
+        const newDrinkName = event.target.value;
 
         if (isSearching.length >= 3) {
             this.setState({ isSearching: true });
         } else {
             this.setState({ isSearching: false });
         }
+        
+        this.setState({ drinkName: newDrinkName });
     }
 
     render() {
         return (
             <View style={styles.container}>
                 <StatusBar
-                    backgroundColor='#6DA7D3'
-                    barStyle='light-content'
+                    backgroundColor="#6DA7D3"
+                    barStyle="light-content"
                 />
-                <TextInput
-                    style={styles.searchInput}
-                    placeholder='Search'
+                <SearchInput
+                    searchHandler={this.searchHandler}
                 />
             </View>
         );
@@ -50,14 +55,7 @@ class SearchScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: '10%',
-        width: '100%',
-        backgroundColor: '#6DA7D3',
-        justifyContent: 'center'
-    },
-    searchInput: {
-        alignSelf: 'center',
-        color: 'white'
+        flex: 1
     }
 });
 

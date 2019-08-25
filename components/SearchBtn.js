@@ -14,7 +14,13 @@ const SearchBtn = props => (
         style={styles.container}
         onPress={props.clickHandler}
     >
-        <SearchIcon style={styles.icon} />
+        <SearchIcon
+            height={15}
+            width={15}
+            iconColor="#6DA7D3"
+            style={styles.icon}
+            style={styles.icon}
+        />
         <Text style={styles.textStyle}>
             Search Your Favorite Cocktail
         </Text>
