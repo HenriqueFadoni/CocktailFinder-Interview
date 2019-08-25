@@ -7,17 +7,17 @@ import {
 } from 'react-native';
 import PropTypes from 'prop-types';
 
-import searchIcon from './search_icon.png';
+import SearchIcon from '../assets/icons/SearchIcon';
 
 const SearchBtn = props => (
     <TouchableOpacity
         style={styles.container}
         onPress={props.clickHandler}
     >
-        <Image source={searchIcon} style={styles.icon} />
+        <SearchIcon style={styles.icon} />
         <Text style={styles.textStyle}>
             Search Your Favorite Cocktail
-        </Text>
+            </Text>
     </TouchableOpacity>
 );
 
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     },
     icon: {
         marginRight: 10,
-        color: '#6DA7D3'
     }
 });
 

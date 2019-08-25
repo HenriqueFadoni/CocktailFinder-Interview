@@ -4,8 +4,11 @@ import {
     View
 } from 'react-native';
 
+import CocktailIcon from '../assets/icons/CocktailIcon';
+
 const IntroIcon = () => (
     <View>
+        <CocktailIcon />
     </View>
 );
 
