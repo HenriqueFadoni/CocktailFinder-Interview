@@ -112,7 +112,8 @@ class SearchInput extends PureComponent {
                                 ]}
                             >
                                 Cancel
-                        </Animated.Text> : null
+                            </Animated.Text> 
+                        : null
                     }
                 </View>
             </KeyboardAvoidingView>

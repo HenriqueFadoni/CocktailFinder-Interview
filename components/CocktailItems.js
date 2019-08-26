@@ -1,77 +1,47 @@
-import React, { Component } from 'react';
-import {
-    Text,
-    View,
-    Image,
-    FlatList,
-    StyleSheet
-} from 'react-native';
+import React from 'react';
+import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
+import * as actions from '../store/actions/index';
+import PropTypes from 'prop-types';
+
+import CocktailItem from './CocktailItem';
 
 const CocktailItems = props => (
     <FlatList
         keyExtractor={cocktail => cocktail.idDrink.toString()}
-        // onRefresh={async () => await }
-        // refreshing={props.isLoading ? true : false}
+        onRefresh={async () => await props.fetchData(props.drinkName)}
+        refreshing={props.isLoading ? true : false}
         contentContainerStyle={{ paddingBottom: 100 }}
-        data={props.cocktailList}
-        renderItem={({ item }) => {
-            console.log(item)
-            return( 
-            <View style={styles.container}>
-                <Image 
-                    style={styles.image}
-                    source={{uri: item.strDrinkThumb}}
-                />
-                <View style={styles.textContainer}>
-                    <Text style={styles.text}>{item.strDrink}</Text>
-                </View>
-
-            </View>
-        )}}
+        data={
+            props.isSearching ?
+                props.cocktailList :
+                null
+        }
+        renderItem={({ item }) => (
+            <CocktailItem item={item} />
+        )}
     />
 );
 
-const styles = StyleSheet.create({
-    container: {
-        flexDirection: "row",
-        width: 300,
-        height: 100,
-        margin: 10,
-        padding: 15,
-        borderRadius: 10,
-        overflow: "hidden",
-        backgroundColor: "#6DA7D3",
-        justifyContent: "flex-start",
-        alignContent: "center",
-        alignSelf: "center"
-    },
-    image: {
-        height: 70,
-        width: 70,
-        borderRadius: 35,
-        justifyContent: "flex-start",
-        alignSelf: "center"
-    },
-    textContainer: {
-        width: 200,
-        justifyContent: 'center',
-        paddingHorizontal: 20
-    },
-    text: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: 'white',
-        justifyContent: 'center',
-        alignSelf: 'center',
-        paddingHorizontal: 10
-    }
-});
-
 const mapStateToProps = state => {
     return {
-        cocktailList: state.cocktail.cocktailList
+        cocktailList: state.cocktail.cocktailList,
+        isLoading: state.cocktail.loading
     }
 }
 
-export default connect(mapStateToProps)(CocktailItems);
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchData: drinkName => dispatch(actions.fetchCocktails(drinkName))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CocktailItems);
+
+CocktailItems.prototype = {
+    drinkName: PropTypes.string.isRequired,
+    isSearching: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+    cocktailList: PropTypes.arrayOf(PropTypes.object).isRequired,
+    fetchData: PropTypes.func.isRequired
+}

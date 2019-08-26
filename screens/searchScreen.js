@@ -25,7 +25,6 @@ class SearchScreen extends Component {
 
     state = {
         isSearching: false,
-        isLoading: false,
         drinkName: '',
     }
 
@@ -34,11 +33,9 @@ class SearchScreen extends Component {
 
         if (newDrinkName.length >= 3) {
             this.setState({ 
-                isSearching: true,
-                isLoading: true
+                isSearching: true
             });
             await this.props.fetchData(newDrinkName);
-            this.setState({ isLoading: false })
         } else {
             this.setState({ isSearching: false });
         }
@@ -57,9 +54,9 @@ class SearchScreen extends Component {
                     isSearching={this.state.isSearching}
                     searchHandler={this.searchHandler}
                 />
-                <CocktailItems
-                    isSearching={this.state.isSearching}
-                    isLoading={this.state.isLoading}
+                <CocktailItems 
+                    drinkName={this.state.drinkName}
+                    isSearching={this.state.isSearching} 
                 />
             </View>
         );
