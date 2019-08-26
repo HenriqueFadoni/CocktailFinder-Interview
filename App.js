@@ -7,21 +7,28 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { Provider } from 'react-redux';
+import reduxThunk from 'redux-thunk';
 
 import Navigation from './navigation/Navigation';
 
-const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu',
+// Reducers
+import cocktailsReducer from './store/reducers/cocktails';
+
+const rootReducer = combineReducers({
+  cocktail: cocktailsReducer
 });
+
+// Store
+const store = createStore(rootReducer, applyMiddleware(reduxThunk));
 
 export default class App extends Component {
   render() {
     return (
-      <Navigation />
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
     );
   }
 }

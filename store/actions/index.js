@@ -1,0 +1,3 @@
+export {
+    fetchCocktails
+} from './cocktails'
