@@ -1,29 +1,92 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import {
     View,
-    Text,
     TextInput,
     KeyboardAvoidingView,
+    Animated,
     StyleSheet,
 } from 'react-native';
 
 import SearchIcon from '../assets/icons/SearchIcon';
 
-class SearchInput extends Component {
+class SearchInput extends PureComponent {
+    state = {
+        isTyping: '',
+        transition: false,
+        animations: {
+            fadeInAnimation: new Animated.Value(0),
+            shrinkAnimation: new Animated.Value(1)
+        }
+    }
+
     async componentDidMount() {
         await setTimeout(() => {
             this.searchInput.focus();
-        }, 100);
+        }, 10);
+    }
+
+    onInputChange = async (event) => {
+        this.setState((state, props) => { 
+            return {
+                isTyping: event
+            }
+        });
+
+
+        if (this.state.isTyping.length > 0) {
+            Animated.sequence([
+                Animated.timing(
+                    this.state.animations.shrinkAnimation,
+                    {
+                        toValue: 80,
+                        duration: 1000,
+                    }
+                ).start(),
+                Animated.timing(
+                    this.state.animations.fadeInAnimation,
+                    {
+                        toValue: 1,
+                        duration: 1000,
+                    }
+                ).start()
+            ]);
+        } else if (this.state.transition) {
+            Animated.timing(
+                this.state.animations.fadeInAnimation,
+                {
+                    toValue: 0,
+                    duration: 5000
+                }
+            ).start();
+        }
+
+        this.props.searchHandler(event);
     }
 
     render() {
+        let x = null;
+        let y = null;
+
+        if (this.state.isTyping.length > 0) {
+            x = this.state.animations.shrinkAnimation.interpolate({
+                inputRange: [1, 80],
+                outputRange: ['100%', '80%']
+            });
+            y = this.state.fadeInAnimation;
+        } else if (this.state.transition) {
+            y = this.state.animations.fadeInAnimation.interpolate({
+                inputRange: [0, 1],
+                outputRange: [1, 0]
+            });
+        }
+
         return (
             <KeyboardAvoidingView
                 style={styles.container}
                 behavior="padding"
             >
                 <View style={styles.formContainer}>
-                    <View style={styles.searchContainer}>
+                    <Animated.View style={[styles.searchContainer, { width: x }]}>
                         <SearchIcon
                             height={15}
                             width={15}
@@ -32,15 +95,25 @@ class SearchInput extends Component {
                         />
                         <TextInput
                             style={styles.searchInput}
-                            onChange={this.props.searchHandler}
+                            onChangeText={this.onInputChange}
                             placeholderTextColor="#6DA7D3"
                             placeholder="Search"
                             returnKeyType="go"
                             autoFocus={true}
                             ref={input => this.searchInput = input}
                         />
-                    </View>
-                    <Text style={styles.cancelBtn}>Cancel</Text>
+                    </Animated.View>
+                    {
+                        this.state.isTyping.length > 0 ?
+                            <Animated.Text
+                                style={[
+                                    styles.cancelBtn,
+                                    { opacity: y }
+                                ]}
+                            >
+                                Cancel
+                        </Animated.Text> : null
+                    }
                 </View>
             </KeyboardAvoidingView>
         );
@@ -58,20 +131,19 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         paddingHorizontal: 30,
         alignItems: "center",
-        justifyContent: 'space-around'
+        justifyContent: 'space-between'
     },
     searchContainer: {
         height: 40,
-        width: 250,
         paddingLeft: 10,
-        paddingRight: 40,
+        paddingRight: 20,
         flexDirection: "row",
         alignSelf: "flex-start",
         backgroundColor: 'white',
         borderRadius: 10
     },
     searchInput: {
-        width: "100%",
+        width: "95%",
         marginLeft: 10,
         color: '#6DA7D3'
     },

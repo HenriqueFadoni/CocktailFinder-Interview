@@ -26,15 +26,14 @@ class SearchScreen extends Component {
     }
 
     searchHandler = event => {
-        const { isSearching } = this.state;
-        const newDrinkName = event.target.value;
+        const newDrinkName = event;
 
-        if (isSearching.length >= 3) {
+        if (newDrinkName.length >= 3) {
             this.setState({ isSearching: true });
         } else {
             this.setState({ isSearching: false });
         }
-        
+
         this.setState({ drinkName: newDrinkName });
     }
 
@@ -46,6 +45,7 @@ class SearchScreen extends Component {
                     barStyle="light-content"
                 />
                 <SearchInput
+                    isSearching={this.state.isSearching}
                     searchHandler={this.searchHandler}
                 />
             </View>
