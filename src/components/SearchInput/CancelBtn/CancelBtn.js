@@ -6,7 +6,7 @@ const CancelBtn = props => (
     <Animated.Text
         style={[
             styles.cancelBtn,
-            { opacity: props.opacityAnimation }
+            { opacity: props.opacityAnimation },
         ]}
         onPress={props.onCancel}
     >

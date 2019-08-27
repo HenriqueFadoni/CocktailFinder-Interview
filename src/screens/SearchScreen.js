@@ -32,14 +32,11 @@ class SearchScreen extends Component {
     }
 
     // Handling the User Input
-    searchHandler = (event) => {
+    searchHandler = event => {
         const newDrinkName = event;
 
         if (newDrinkName.length >= 3) {
-            this.setState({
-                isSearching: true
-            });
-
+            this.setState({ isSearching: true });
             this.props.fetchData(newDrinkName);
         } else {
             this.setState({ isSearching: false });
@@ -55,10 +52,7 @@ class SearchScreen extends Component {
                     backgroundColor="#6DA7D3"
                     barStyle="light-content"
                 />
-                <SearchInput
-                    isSearching={this.state.isSearching}
-                    searchHandler={this.searchHandler}
-                />
+                <SearchInput searchHandler={this.searchHandler} />
                 <CocktailItems
                     drinkName={this.state.drinkName}
                     isSearching={this.state.isSearching}

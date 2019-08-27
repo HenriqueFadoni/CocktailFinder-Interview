@@ -6,7 +6,9 @@ import {
     Animated,
     StyleSheet,
 } from 'react-native';
+import PropTypes from 'prop-types';
 
+// Importing Components
 import SearchIcon from '../../assets/icons/SearchIcon';
 import CancelBtn from './CancelBtn/CancelBtn';
 
@@ -16,6 +18,7 @@ class SearchInput extends PureComponent {
         opacityAnimation: new Animated.Value(0)
     }
 
+    // Handling Focus on IOS
     componentDidMount() {
         setTimeout(() => {
             this.searchInput.focus();
@@ -23,26 +26,34 @@ class SearchInput extends PureComponent {
     }
 
     onInputChange = event => {
+        // Handling Animations
         const { isTyping, opacityAnimation } = this.state
-        if (event.length > 0 && isTyping.length < 1) {
-            opacityAnimation.setValue(0);
 
-            Animated.timing(opacityAnimation, {
-                toValue: 1,
-                duration: 200
-            }).start();
-        } else if (event.length <= 1 && isTyping.length > 1) {
-            Animated.timing(opacityAnimation, {
-                toValue: 0,
-                duration: 200
-            }).start();
+        if (event.trim() !== '') {
+            // When the User Start Typing
+            if (event.length > 2 && isTyping.length <= 2) {
+                opacityAnimation.setValue(0);
+
+                Animated.timing(opacityAnimation, {
+                    toValue: 1,
+                    duration: 200
+                }).start();
+                // When the User Deletes Everything Manually
+            } else if (event.length <= 2 && isTyping.length >= 2) {
+                Animated.timing(opacityAnimation, {
+                    toValue: 0,
+                    duration: 200
+                }).start();
+            }
         }
 
+        // Adjusting the State
         this.setState({ isTyping: event.trim() });
         this.props.searchHandler(event.trim());
     }
 
     onInputReset = () => {
+        // Handling Animation When the User Deletes Everything
         const { opacityAnimation } = this.state
 
         opacityAnimation.setValue(1);
@@ -52,6 +63,7 @@ class SearchInput extends PureComponent {
             duration: 200
         }).start();
 
+        // Adjusting the State
         this.setState({ isTyping: '' });
         this.props.searchHandler('');
     }
@@ -80,12 +92,10 @@ class SearchInput extends PureComponent {
                             autoFocus={true}
                             ref={input => this.searchInput = input}
                         />
-
                         <CancelBtn
                             onCancel={this.onInputReset}
                             opacityAnimation={this.state.opacityAnimation}
                         />
-
                     </View>
                 </View>
             </KeyboardAvoidingView>
@@ -101,8 +111,8 @@ const styles = StyleSheet.create({
         justifyContent: "center"
     },
     formContainer: {
-        flexDirection: "row",
         paddingHorizontal: 30,
+        flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between"
     },
@@ -127,3 +137,7 @@ const styles = StyleSheet.create({
 });
 
 export default SearchInput;
+
+SearchInput.protoType = {
+    searchHandler: PropTypes.func.isRequired
+}
