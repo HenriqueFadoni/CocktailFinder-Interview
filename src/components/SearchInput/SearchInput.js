@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import {
     View,
     TextInput,
@@ -12,7 +12,7 @@ import PropTypes from 'prop-types';
 import SearchIcon from '../../assets/icons/SearchIcon';
 import CancelBtn from './CancelBtn/CancelBtn';
 
-class SearchInput extends PureComponent {
+class SearchInput extends Component {
     state = {
         isTyping: '',
         opacityAnimation: new Animated.Value(0)
