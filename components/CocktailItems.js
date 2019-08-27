@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import * as actions from '../store/actions/index';
 import PropTypes from 'prop-types';
 
+// Importing Component
 import CocktailItem from './CocktailItem';
 
 const CocktailItems = props => (
@@ -23,6 +24,7 @@ const CocktailItems = props => (
     />
 );
 
+// Handling Redux
 const mapStateToProps = state => {
     return {
         cocktailList: state.cocktail.cocktailList,
@@ -38,6 +40,7 @@ const mapDispatchToProps = dispatch => {
 
 export default connect(mapStateToProps, mapDispatchToProps)(CocktailItems);
 
+// Prop-Types
 CocktailItems.prototype = {
     drinkName: PropTypes.string.isRequired,
     isSearching: PropTypes.bool.isRequired,

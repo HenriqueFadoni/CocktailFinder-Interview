@@ -3,16 +3,16 @@ import {
     createAppContainer
 } from 'react-navigation';
 
-import welcomeScreen from '../screens/welcomeScreen';
-import searchScreen from '../screens/searchScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const Navigation = createStackNavigator(
     {
         welcomeScreen: {
-            screen: welcomeScreen
+            screen: WelcomeScreen
         },
         searchScreen: {
-            screen: searchScreen
+            screen: SearchScreen
         }
     },
     {

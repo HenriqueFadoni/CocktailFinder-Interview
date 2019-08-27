@@ -6,11 +6,14 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/index';
+import PropTypes from  'prop-types';
 
+// Importing Components
 import SearchInput from '../components/SearchInput';
 import CocktailItems from '../components/CocktailItems'
 
 class SearchScreen extends Component {
+    // Styling the Navigation
     static navigationOptions = {
         headerStyle: {
             backgroundColor: '#6DA7D3',
@@ -28,19 +31,23 @@ class SearchScreen extends Component {
         drinkName: '',
     }
 
-    searchHandler = async(event) => {
-        const newDrinkName = event;
+    // Handling the User Input
+    searchHandler = (event) => {
+        if (event.trim() !== '') {
+            const newDrinkName = event;
 
-        if (newDrinkName.length >= 3) {
-            this.setState({ 
-                isSearching: true
-            });
-            await this.props.fetchData(newDrinkName);
-        } else {
-            this.setState({ isSearching: false });
+            if (newDrinkName.length >= 3) {
+                this.setState({
+                    isSearching: true
+                });
+
+                this.props.fetchData(newDrinkName);
+            } else {
+                this.setState({ isSearching: false });
+            }
+
+            this.setState({ drinkName: newDrinkName });
         }
-
-        this.setState({ drinkName: newDrinkName });
     }
 
     render() {
@@ -54,9 +61,9 @@ class SearchScreen extends Component {
                     isSearching={this.state.isSearching}
                     searchHandler={this.searchHandler}
                 />
-                <CocktailItems 
+                <CocktailItems
                     drinkName={this.state.drinkName}
-                    isSearching={this.state.isSearching} 
+                    isSearching={this.state.isSearching}
                 />
             </View>
         );
@@ -69,6 +76,7 @@ const styles = StyleSheet.create({
     }
 });
 
+// Handling Redux Calls
 const mapDispatchToProps = dispatch => {
     return {
         fetchData: drinkName => dispatch(actions.fetchCocktails(drinkName))
@@ -76,3 +84,8 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default connect(null, mapDispatchToProps)(SearchScreen);
+
+// Prop-Types
+SearchScreen.protoType = {
+    fetchData: PropTypes.func.isRequired
+}

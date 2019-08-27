@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { 
-  StyleSheet, 
+import {
+  StyleSheet,
   View,
   StatusBar
 } from 'react-native';
 import PropTypes from 'prop-types';
 
+// Importing Components
 import IntroIcon from '../components/IntroIcon';
 import Title from '../components/Title';
 import SearchBtn from '../components/SearchBtn';
 
 class WelcomeScreen extends Component {
+  // Taking out Header from HomeScreen
   static navigationOptions = {
     header: null
   }
@@ -22,9 +24,9 @@ class WelcomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <StatusBar 
-          backgroundColor='#6DA7D3'
-          barStyle='light-content'
+        <StatusBar
+          backgroundColor="#6DA7D3"
+          barStyle="light-content"
         />
         <IntroIcon />
         <Title />
@@ -36,18 +38,19 @@ class WelcomeScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#6DA7D3'
+    height: "100%",
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#6DA7D3"
   }
 });
 
+export default WelcomeScreen;
+
+// Prop-Types
 WelcomeScreen.protoType = {
   navigation: PropTypes.shape({
     navigate: PropTypes.func
   }).isRequired
 }
-
-export default WelcomeScreen;

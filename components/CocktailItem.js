@@ -21,12 +21,12 @@ const CocktailItem = props => (
 
 const styles = StyleSheet.create({
     container: {
-        flexDirection: "row",
         height: 100,
         width: 300,
         margin: 10,
         padding: 15,
         borderRadius: 10,
+        flexDirection: "row",
         overflow: "hidden",
         backgroundColor: "#6DA7D3",
         justifyContent: "flex-start",
@@ -42,21 +42,22 @@ const styles = StyleSheet.create({
     },
     textContainer: {
         width: 200,
-        justifyContent: 'center',
+        justifyContent: "center",
         paddingHorizontal: 20
     },
     text: {
         fontSize: 16,
-        fontWeight: 'bold',
-        color: 'white',
-        justifyContent: 'center',
-        alignSelf: 'center',
+        fontWeight: "bold",
+        color: "white",
+        justifyContent: "center",
+        alignSelf: "center",
         paddingHorizontal: 10
     }
 });
 
 export default CocktailItem;
 
+// Prop-Types
 CocktailItem.prototype = {
     item: PropTypes.shape({
         strDrinkThumb: PropTypes.string,

@@ -18,16 +18,16 @@ const Title = () => (
 
 const styles = StyleSheet.create({
     textContainer: {
-        flexDirection: 'row',
+        flexDirection: "row",
         marginTop: 20
     },
     textStyle: {
-        color: 'white',
+        color: "white",
         fontSize: 30
     },
     textBold: {
-        fontWeight: 'bold'
+        fontWeight: "bold"
     }
 });
 
-export default Title;
+export default Title
