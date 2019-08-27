@@ -11,10 +11,10 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import reduxThunk from 'redux-thunk';
 
-import Navigation from './navigation/Navigation';
+import Navigation from './src/navigation/Navigation';
 
 // Reducers
-import cocktailsReducer from './store/reducers/cocktails';
+import cocktailsReducer from './src/store/reducers/cocktails';
 
 const rootReducer = combineReducers({
   cocktail: cocktailsReducer

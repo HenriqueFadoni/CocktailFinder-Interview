@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import {
+    Text,
     View,
     TextInput,
     KeyboardAvoidingView,
@@ -26,67 +27,25 @@ class SearchInput extends PureComponent {
     }
 
     onInputChange = async (event) => {
-        this.setState((state, props) => { 
-            return {
-                isTyping: event
-            }
-        });
-
-
-        if (this.state.isTyping.length > 0) {
-            Animated.sequence([
-                Animated.timing(
-                    this.state.animations.shrinkAnimation,
-                    {
-                        toValue: 80,
-                        duration: 1000,
-                    }
-                ).start(),
-                Animated.timing(
-                    this.state.animations.fadeInAnimation,
-                    {
-                        toValue: 1,
-                        duration: 1000,
-                    }
-                ).start()
-            ]);
-        } else if (this.state.transition) {
-            Animated.timing(
-                this.state.animations.fadeInAnimation,
-                {
-                    toValue: 0,
-                    duration: 5000
-                }
-            ).start();
+        if (event.trim() !== '') {
+            this.setState({ isTyping: event.trim() });
+            this.props.searchHandler(event.trim());
         }
+    }
 
-        this.props.searchHandler(event);
+    onInputReset = () => {
+        this.setState({ isTyping: '' });
+        this.props.searchHandler('');
     }
 
     render() {
-        let x = null;
-        let y = null;
-
-        if (this.state.isTyping.length > 0) {
-            x = this.state.animations.shrinkAnimation.interpolate({
-                inputRange: [1, 80],
-                outputRange: ['100%', '80%']
-            });
-            y = this.state.fadeInAnimation;
-        } else if (this.state.transition) {
-            y = this.state.animations.fadeInAnimation.interpolate({
-                inputRange: [0, 1],
-                outputRange: [1, 0]
-            });
-        }
-
         return (
             <KeyboardAvoidingView
                 style={styles.container}
                 behavior="padding"
             >
                 <View style={styles.formContainer}>
-                    <Animated.View style={[styles.searchContainer, { width: x }]}>
+                    <View style={[styles.searchContainer, { width: "80%" }]}>
                         <SearchIcon
                             height={15}
                             width={15}
@@ -95,6 +54,7 @@ class SearchInput extends PureComponent {
                         />
                         <TextInput
                             style={styles.searchInput}
+                            value={this.state.isTyping}
                             onChangeText={this.onInputChange}
                             placeholderTextColor="#6DA7D3"
                             placeholder="Search"
@@ -102,18 +62,19 @@ class SearchInput extends PureComponent {
                             autoFocus={true}
                             ref={input => this.searchInput = input}
                         />
-                    </Animated.View>
+                    </View>
                     {
                         this.state.isTyping.length > 0 ?
-                            <Animated.Text
+                            <Text
                                 style={[
                                     styles.cancelBtn,
-                                    { opacity: y }
+                                    { opacity: 1 }
                                 ]}
+                                onPress={this.onInputReset}
                             >
                                 Cancel
-                            </Animated.Text> 
-                        : null
+                            </Text>
+                            : null
                     }
                 </View>
             </KeyboardAvoidingView>

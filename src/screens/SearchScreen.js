@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions/index';
-import PropTypes from  'prop-types';
+import PropTypes from 'prop-types';
 
 // Importing Components
 import SearchInput from '../components/SearchInput';
@@ -33,21 +33,19 @@ class SearchScreen extends Component {
 
     // Handling the User Input
     searchHandler = (event) => {
-        if (event.trim() !== '') {
-            const newDrinkName = event;
+        const newDrinkName = event;
 
-            if (newDrinkName.length >= 3) {
-                this.setState({
-                    isSearching: true
-                });
+        if (newDrinkName.length >= 3) {
+            this.setState({
+                isSearching: true
+            });
 
-                this.props.fetchData(newDrinkName);
-            } else {
-                this.setState({ isSearching: false });
-            }
-
-            this.setState({ drinkName: newDrinkName });
+            this.props.fetchData(newDrinkName);
+        } else {
+            this.setState({ isSearching: false });
         }
+
+        this.setState({ drinkName: newDrinkName });
     }
 
     render() {
