@@ -23,10 +23,13 @@ Obs: Please be careful with the versions that are marked (**).
 ## How the list can be more performant if it has to manage a big amount of data?
 
 This list can be a good fit for highly stressful environments because of four main factors. 
+
 First, this program not only has fewer Stateful Components. But, also, takes advantage of React Native, for instance, it uses
 `FlatList` which constrains the amount of data loaded to the user screen, therefore reducing processing and loading time.
+
 Second, the code written uses the state on a smarter way minimizing `setState` and Redux calls in order to again reduce processing.
 Third, Redux helps the application pass props through the components and fetch Data only when it is necessary. With that
 our application has more indepency in order to run in 60FPS.
+
 Last but not least, this small mobile app tries to avoid methods that somehow delay processing, for example `componentShouldUpdate`. And,
 makes use of other methods instead.
