@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react';
 import {
-    Text,
     View,
     TextInput,
     KeyboardAvoidingView,
@@ -8,32 +7,51 @@ import {
     StyleSheet,
 } from 'react-native';
 
-import SearchIcon from '../assets/icons/SearchIcon';
+import SearchIcon from '../../assets/icons/SearchIcon';
+import CancelBtn from './CancelBtn/CancelBtn';
 
 class SearchInput extends PureComponent {
     state = {
         isTyping: '',
-        transition: false,
-        animations: {
-            fadeInAnimation: new Animated.Value(0),
-            shrinkAnimation: new Animated.Value(1)
-        }
+        opacityAnimation: new Animated.Value(0)
     }
 
-    async componentDidMount() {
-        await setTimeout(() => {
+    componentDidMount() {
+        setTimeout(() => {
             this.searchInput.focus();
         }, 10);
     }
 
-    onInputChange = async (event) => {
-        if (event.trim() !== '') {
-            this.setState({ isTyping: event.trim() });
-            this.props.searchHandler(event.trim());
+    onInputChange = event => {
+        const { isTyping, opacityAnimation } = this.state
+        if (event.length > 0 && isTyping.length < 1) {
+            opacityAnimation.setValue(0);
+
+            Animated.timing(opacityAnimation, {
+                toValue: 1,
+                duration: 200
+            }).start();
+        } else if (event.length <= 1 && isTyping.length > 1) {
+            Animated.timing(opacityAnimation, {
+                toValue: 0,
+                duration: 200
+            }).start();
         }
+
+        this.setState({ isTyping: event.trim() });
+        this.props.searchHandler(event.trim());
     }
 
     onInputReset = () => {
+        const { opacityAnimation } = this.state
+
+        opacityAnimation.setValue(1);
+
+        Animated.timing(opacityAnimation, {
+            toValue: 0,
+            duration: 200
+        }).start();
+
         this.setState({ isTyping: '' });
         this.props.searchHandler('');
     }
@@ -45,7 +63,7 @@ class SearchInput extends PureComponent {
                 behavior="padding"
             >
                 <View style={styles.formContainer}>
-                    <View style={[styles.searchContainer, { width: "80%" }]}>
+                    <View style={styles.searchContainer}>
                         <SearchIcon
                             height={15}
                             width={15}
@@ -62,20 +80,13 @@ class SearchInput extends PureComponent {
                             autoFocus={true}
                             ref={input => this.searchInput = input}
                         />
+
+                        <CancelBtn
+                            onCancel={this.onInputReset}
+                            opacityAnimation={this.state.opacityAnimation}
+                        />
+
                     </View>
-                    {
-                        this.state.isTyping.length > 0 ?
-                            <Text
-                                style={[
-                                    styles.cancelBtn,
-                                    { opacity: 1 }
-                                ]}
-                                onPress={this.onInputReset}
-                            >
-                                Cancel
-                            </Text>
-                            : null
-                    }
                 </View>
             </KeyboardAvoidingView>
         );
@@ -85,35 +96,33 @@ class SearchInput extends PureComponent {
 const styles = StyleSheet.create({
     container: {
         height: 60,
-        width: '100%',
-        backgroundColor: '#6DA7D3',
-        justifyContent: 'center'
+        width: "100%",
+        backgroundColor: "#6DA7D3",
+        justifyContent: "center"
     },
     formContainer: {
         flexDirection: "row",
         paddingHorizontal: 30,
         alignItems: "center",
-        justifyContent: 'space-between'
+        justifyContent: "space-between"
     },
     searchContainer: {
         height: 40,
+        width: "100%",
         paddingLeft: 10,
         paddingRight: 20,
         flexDirection: "row",
         alignSelf: "flex-start",
-        backgroundColor: 'white',
+        backgroundColor: "white",
         borderRadius: 10
     },
     searchInput: {
-        width: "95%",
+        width: "80%",
         marginLeft: 10,
-        color: '#6DA7D3'
+        color: "#6DA7D3"
     },
     icon: {
         alignSelf: "center",
-    },
-    cancelBtn: {
-        color: 'white'
     }
 });
 

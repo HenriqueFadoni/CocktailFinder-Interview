@@ -9,7 +9,7 @@ import * as actions from '../store/actions/index';
 import PropTypes from 'prop-types';
 
 // Importing Components
-import SearchInput from '../components/SearchInput';
+import SearchInput from '../components/SearchInput/SearchInput';
 import CocktailItems from '../components/CocktailItems/CocktailItems'
 
 class SearchScreen extends Component {
