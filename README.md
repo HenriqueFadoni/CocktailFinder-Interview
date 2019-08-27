@@ -27,10 +27,11 @@ This list can be a good fit for highly stressful environments because of four ma
 First, this program not only has fewer Stateful Components. But, also, takes advantage of React Native, for instance, it uses
 `FlatList` which constrains the amount of data loaded to the user screen, therefore reducing processing and loading time.
 
-Second, the code written uses the state on a smarter way minimizing `setState` and Redux calls in order to again reduce processing.
+Second, the code written uses the state on a smarter way minimizing `setState` and Redux calls in order to again save up processing.
 
 Third, Redux helps the application pass props through the components and fetch Data only when it is necessary. With that
 our application has more indepency in order to run in 60FPS.
 
-Last but not least, this small mobile app tries to avoid methods that somehow delay processing, for example `componentShouldUpdate`. And,
-makes use of other methods instead.
+Last but not least, this small mobile app tries to avoid methods that somehow delay processing, for example `componentShouldUpdate`(re-render calls). And, makes use of other methods instead.
+
+On the other hand, in order to manage a bigger amount of data, we would need to not only apply the methods described earlier as using more native methods and less Redux calls. Moreover, it would be interesting to adding pagination on the Back-End, and, furthermore, restraining the amount of API and Redux calls on the Front-End. Additionally, we would need to be extra careful on how we manipulate our `setStates`, inasmuch as it can be Asynchronous, state management and animations.
