@@ -24,7 +24,7 @@ Obs: Please be careful with the versions that are marked (**).
 
 This list can be a good fit for highly stressful environments because of four main factors. 
 First, this program not only has fewer Stateful Components. But, also, takes advantage of React Native, for instance, it uses
-FlatList` which constrains the amount of data loaded to the user screen, therefore reducing processing and loading time.
+`FlatList` which constrains the amount of data loaded to the user screen, therefore reducing processing and loading time.
 Second, the code written uses the state on a smarter way minimizing `setState` and Redux calls in order to again reduce processing.
 Third, Redux helps the application pass props through the components and fetch Data only when it is necessary. With that
 our application has more indepency in order to run in 60FPS.
