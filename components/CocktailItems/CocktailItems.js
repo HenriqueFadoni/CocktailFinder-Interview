@@ -1,11 +1,11 @@
 import React from 'react';
 import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
-import * as actions from '../store/actions/index';
 import PropTypes from 'prop-types';
+import * as actions from '../../store/actions/index';
 
 // Importing Component
-import CocktailItem from './CocktailItem';
+import CocktailItem from './CocktailItem/CocktailItem';
 
 const CocktailItems = props => (
     <FlatList

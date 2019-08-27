@@ -10,7 +10,7 @@ import PropTypes from  'prop-types';
 
 // Importing Components
 import SearchInput from '../components/SearchInput';
-import CocktailItems from '../components/CocktailItems'
+import CocktailItems from '../components/CocktailItems/CocktailItems'
 
 class SearchScreen extends Component {
     // Styling the Navigation
